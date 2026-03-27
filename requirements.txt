@@ -1,0 +1,8 @@
+# Requirements for Credit Card Fraud Detection
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+imbalanced-learn
+joblib
