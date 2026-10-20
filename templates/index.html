@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AegisGuard AI - Credit Card Fraud Detection & Banking Security Platform</title>
+    <meta name="description" content="Next-generation AI-powered Credit Card Fraud Detection platform with real-time risk radar, machine learning intelligence, and banking simulation.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Top Navigation Header -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div class="brand-text">
+                    <h1>AEGIS<span>GUARD</span> AI</h1>
+                    <p class="tagline">Credit Card Fraud Detection & Risk Intelligence</p>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <div class="status-pill online">
+                    <span class="pulsing-dot"></span>
+                    <span id="system-status-text">AI Shield Active</span>
+                </div>
+                <a href="#api-docs" class="badge-link" onclick="switchTab('api')">
+                    <i class="fa-solid fa-code"></i> REST API
+                </a>
+                <div class="deploy-badge" title="Accessible from any web browser or public link">
+                    <i class="fa-solid fa-cloud"></i> Cloud Ready
+                </div>
+            </div>
+        </div>
+        
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs-wrapper">
+            <div class="nav-tabs">
+                <button class="nav-tab active" data-tab="detector" onclick="switchTab('detector')">
+                    <i class="fa-solid fa-radar"></i> Live Fraud Radar
+                </button>
+                <button class="nav-tab" data-tab="banking" onclick="switchTab('banking')">
+                    <i class="fa-solid fa-building-columns"></i> Banking Portal
+                </button>
+                <button class="nav-tab" data-tab="analytics" onclick="switchTab('analytics')">
+                    <i class="fa-solid fa-chart-pie"></i> Model & Data Analytics
+                </button>
+                <button class="nav-tab" data-tab="batch" onclick="switchTab('batch')">
+                    <i class="fa-solid fa-file-csv"></i> Batch CSV Scanner
+                </button>
+                <button class="nav-tab" data-tab="generator" onclick="switchTab('generator')">
+                    <i class="fa-solid fa-database"></i> Custom Dataset Studio
+                </button>
+                <button class="nav-tab" data-tab="api" onclick="switchTab('api')">
+                    <i class="fa-solid fa-terminal"></i> API & Deploy Guide
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-content">
+        <!-- 1. TAB: LIVE FRAUD RADAR -->
+        <section id="tab-detector" class="tab-pane active">
+            <div class="grid-layout">
+                <!-- Left Column: Transaction Input Form -->
+                <div class="panel form-panel">
+                    <div class="panel-header">
+                        <h2><i class="fa-solid fa-credit-card"></i> Transaction Inspector</h2>
+                        <span class="panel-sub">Simulate or evaluate real-time transaction telemetry</span>
+                    </div>
+
+                    <!-- Quick Preset Pills -->
+                    <div class="preset-section">
+                        <label class="section-label"><i class="fa-solid fa-wand-magic-sparkles"></i> 1-Click Test Scenarios:</label>
+                        <div class="preset-pills">
+                            <button type="button" class="preset-pill pill-safe" onclick="loadPreset('coffee')">
+                                <i class="fa-solid fa-mug-hot"></i> Coffee ($4.50)
+                            </button>
+                            <button type="button" class="preset-pill pill-safe" onclick="loadPreset('grocery')">
+                                <i class="fa-solid fa-basket-shopping"></i> Grocery ($78.20)
+                            </button>
+                            <button type="button" class="preset-pill pill-safe" onclick="loadPreset('gas')">
+                                <i class="fa-solid fa-gas-pump"></i> Gas Station ($45.00)
+                            </button>
+                            <button type="button" class="preset-pill pill-danger" onclick="loadPreset('crypto')">
+                                <i class="fa-brands fa-bitcoin"></i> 3 AM Crypto ($4,500)
+                            </button>
+                            <button type="button" class="preset-pill pill-danger" onclick="loadPreset('overseas')">
+                                <i class="fa-solid fa-gem"></i> Overseas Luxury ($3,890)
+                            </button>
+                            <button type="button" class="preset-pill pill-danger" onclick="loadPreset('card_test')">
+                                <i class="fa-solid fa-bolt"></i> Micro-Charge ($1.25)
+                            </button>
+                        </div>
+                    </div>
+
+                    <form id="fraud-form" onsubmit="handleDetection(event)">
+                        <div class="form-row">
+                            <div class="form-group flex-1">
+                                <label for="tx-amount"><i class="fa-solid fa-dollar-sign"></i> Transaction Amount ($)</label>
+                                <input type="number" id="tx-amount" step="0.01" min="0.01" value="45.00" required>
+                            </div>
+                            <div class="form-group flex-1">
+                                <label for="tx-hour"><i class="fa-regular fa-clock"></i> Hour of Day (0-23)</label>
+                                <input type="number" id="tx-hour" min="0" max="23" value="14" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group flex-1">
+                                <label for="tx-category"><i class="fa-solid fa-store"></i> Merchant Category</label>
+                                <select id="tx-category">
+                                    <option value="Grocery">Grocery & Supermarket</option>
+                                    <option value="Dining & Restaurants">Dining & Restaurants</option>
+                                    <option value="Gas & Fuel">Gas & Fuel Stations</option>
+                                    <option value="Online Retail">Online Retail / E-Commerce</option>
+                                    <option value="Electronics">Electronics & Computers</option>
+                                    <option value="Travel & Airlines">Travel & Airlines</option>
+                                    <option value="Luxury & Jewelry">Luxury Goods & Jewelry</option>
+                                    <option value="Crypto & Trading">Cryptocurrency & Trading</option>
+                                    <option value="Entertainment">Entertainment & Gaming</option>
+                                </select>
+                            </div>
+                            <div class="form-group flex-1">
+                                <label for="tx-type"><i class="fa-solid fa-satellite-dish"></i> Terminal Type</label>
+                                <select id="tx-type">
+                                    <option value="Chip_POS">EMV Chip (POS)</option>
+                                    <option value="Contactless_NFC">Contactless / Tap to Pay</option>
+                                    <option value="Online_CNP">Card-Not-Present (Online)</option>
+                                    <option value="ATM_Withdrawal">ATM Cash Withdrawal</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group flex-1">
+                                <label for="tx-distance"><i class="fa-solid fa-route"></i> Distance from Home (km)</label>
+                                <input type="number" id="tx-distance" min="0" step="0.5" value="8.5">
+                            </div>
+                            <div class="form-group flex-1">
+                                <label for="tx-failed-pins"><i class="fa-solid fa-key"></i> Failed PIN Attempts</label>
+                                <input type="number" id="tx-failed-pins" min="0" max="5" value="0">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group flex-1">
+                                <label for="tx-device-trust"><i class="fa-solid fa-mobile-screen"></i> Device Trust Score (0-100)</label>
+                                <div class="range-wrap">
+                                    <input type="range" id="tx-device-trust" min="0" max="100" value="95" oninput="updateTrustLabel(this.value)">
+                                    <span id="trust-val" class="range-display">95%</span>
+                                </div>
+                            </div>
+                            <div class="form-group flex-1 flex-center">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="tx-is-foreign">
+                                    <span class="checkmark"></span>
+                                    <span>Foreign / Cross-Border Transaction</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="btn-scan" class="btn btn-primary btn-block">
+                            <i class="fa-solid fa-shield-virus"></i> RUN AI FRAUD INSPECTION
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Right Column: Animated Card + Risk Radar Results -->
+                <div class="panel result-panel">
+                    <!-- Interactive Virtual Credit Card -->
+                    <div class="card-showcase">
+                        <div class="virtual-card" id="virtual-card">
+                            <div class="card-top">
+                                <div class="card-chip">
+                                    <div class="chip-line"></div>
+                                    <div class="chip-line"></div>
+                                </div>
+                                <span class="card-contactless"><i class="fa-solid fa-wifi"></i></span>
+                                <div class="card-brand" id="card-brand">VISA</div>
+                            </div>
+                            <div class="card-number">•••• •••• •••• 7890</div>
+                            <div class="card-bottom">
+                                <div class="card-holder">
+                                    <div class="label">CARDHOLDER</div>
+                                    <div class="value" id="cardholder-name">JOHN DOE</div>
+                                </div>
+                                <div class="card-expiry">
+                                    <div class="label">EXPIRES</div>
+                                    <div class="value">08/29</div>
+                                </div>
+                                <div class="card-status-badge badge-safe" id="card-badge">
+                                    <i class="fa-solid fa-shield-check"></i> SECURE
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Risk Gauge Meter -->
+                    <div class="risk-gauge-container">
+                        <div class="gauge-header">
+                            <h3>AI FRAUD RISK ASSESSMENT</h3>
+                            <span class="decision-badge" id="decision-badge">PENDING INSPECTION</span>
+                        </div>
+
+                        <div class="gauge-display">
+                            <div class="gauge-circle" id="gauge-circle">
+                                <div class="gauge-inner">
+                                    <div class="prob-number" id="prob-val">0.0%</div>
+                                    <div class="prob-label">FRAUD PROBABILITY</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Risk Meter Bar -->
+                        <div class="risk-bar-track">
+                            <div class="risk-bar-fill" id="risk-bar-fill" style="width: 2%;"></div>
+                        </div>
+                        <div class="risk-scale-labels">
+                            <span class="scale-low">LOW (0-25%)</span>
+                            <span class="scale-med">MEDIUM (25-50%)</span>
+                            <span class="scale-high">HIGH (50-75%)</span>
+                            <span class="scale-crit">CRITICAL (75-100%)</span>
+                        </div>
+
+                        <!-- Explainable AI Factors -->
+                        <div class="xai-container">
+                            <h4><i class="fa-solid fa-brain"></i> AI Reasoning & Telemetry Signals:</h4>
+                            <ul class="reason-list" id="reason-list">
+                                <li>Select a preset or click <strong>RUN AI FRAUD INSPECTION</strong> to evaluate risk vectors.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. TAB: BANKING PORTAL SIMULATOR -->
+        <section id="tab-banking" class="tab-pane">
+            <div class="banking-layout">
+                <!-- Account Selector Bar -->
+                <div class="panel account-selector-panel">
+                    <div class="panel-header">
+                        <h2><i class="fa-solid fa-user-shield"></i> Active Customer Accounts</h2>
+                        <span class="panel-sub">Select a customer account to simulate banking transactions</span>
+                    </div>
+                    <div class="account-cards-grid" id="account-cards-container">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <div class="grid-layout mt-4">
+                    <!-- Send Funds Form -->
+                    <div class="panel form-panel">
+                        <div class="panel-header">
+                            <h2><i class="fa-solid fa-paper-plane"></i> Transfer & Payment Terminal</h2>
+                            <span class="panel-sub">Protected by real-time AegisGuard Fraud Interceptor</span>
+                        </div>
+                        <form id="transfer-form" onsubmit="handleTransfer(event)">
+                            <div class="form-group">
+                                <label><i class="fa-solid fa-id-card"></i> Selected Account</label>
+                                <input type="text" id="transfer-acc" readonly class="input-readonly">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group flex-1">
+                                    <label><i class="fa-solid fa-user"></i> Recipient / Payee Name</label>
+                                    <input type="text" id="transfer-recipient" value="Starbucks London" required>
+                                </div>
+                                <div class="form-group flex-1">
+                                    <label><i class="fa-solid fa-dollar-sign"></i> Transfer Amount ($)</label>
+                                    <input type="number" id="transfer-amount" step="0.01" min="1" value="150.00" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group flex-1">
+                                    <label><i class="fa-solid fa-tag"></i> Merchant Category</label>
+                                    <select id="transfer-cat">
+                                        <option value="Online Retail">Online Retail</option>
+                                        <option value="Dining & Restaurants">Dining & Restaurants</option>
+                                        <option value="Grocery">Grocery</option>
+                                        <option value="Electronics">Electronics</option>
+                                        <option value="Luxury & Jewelry">Luxury & Jewelry</option>
+                                        <option value="Crypto & Trading">Crypto & Trading</option>
+                                    </select>
+                                </div>
+                                <div class="form-group flex-1">
+                                    <label><i class="fa-solid fa-lock"></i> Security PIN (4 Digits)</label>
+                                    <input type="password" id="transfer-pin" maxlength="4" placeholder="Enter PIN" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group flex-1">
+                                    <label><i class="fa-solid fa-globe"></i> Location Context</label>
+                                    <select id="transfer-location">
+                                        <option value="local">Local Billing City (0 - 15 km)</option>
+                                        <option value="domestic">Domestic Travel (250 km)</option>
+                                        <option value="international">Overseas / International (4,500 km)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group flex-1">
+                                    <label><i class="fa-solid fa-clock"></i> Transaction Time</label>
+                                    <select id="transfer-time">
+                                        <option value="14">Daytime (02:00 PM)</option>
+                                        <option value="20">Evening (08:00 PM)</option>
+                                        <option value="3">Nighttime (03:00 AM)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block">
+                                <i class="fa-solid fa-lock"></i> VALIDATE & EXECUTE PAYMENT
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Live Bank Audit Log -->
+                    <div class="panel result-panel">
+                        <div class="panel-header">
+                            <h2><i class="fa-solid fa-list-check"></i> Real-time Transaction Ledger</h2>
+                            <span class="panel-sub">Live audit trail of approved & intercepted transactions</span>
+                        </div>
+                        <div class="audit-table-wrapper">
+                            <table class="data-table" id="audit-table">
+                                <thead>
+                                    <tr>
+                                        <th>Tx ID</th>
+                                        <th>Recipient</th>
+                                        <th>Amount</th>
+                                        <th>Risk Score</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="audit-table-body">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. TAB: MODEL & DATA ANALYTICS -->
+        <section id="tab-analytics" class="tab-pane">
+            <div class="analytics-layout">
+                <!-- Metric Cards -->
+                <div class="stats-cards-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-database"></i></div>
+                        <div class="stat-data">
+                            <div class="stat-number" id="stat-total-records">5,000</div>
+                            <div class="stat-title">Total Transactions Analyzed</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon alert"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                        <div class="stat-data">
+                            <div class="stat-number" id="stat-fraud-rate">3.5%</div>
+                            <div class="stat-title">Fraud Incidence Rate</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon success"><i class="fa-solid fa-bullseye"></i></div>
+                        <div class="stat-data">
+                            <div class="stat-number" id="stat-accuracy">100.0%</div>
+                            <div class="stat-title">Model Accuracy</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon purple"><i class="fa-solid fa-chart-line"></i></div>
+                        <div class="stat-data">
+                            <div class="stat-number" id="stat-roc-auc">1.000</div>
+                            <div class="stat-title">ROC-AUC Discriminator</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Grid -->
+                <div class="charts-grid">
+                    <div class="panel chart-card">
+                        <h3><i class="fa-solid fa-clock"></i> Fraud Frequency by Hour of Day</h3>
+                        <p class="chart-desc">Highlights nocturnal fraud surge between 1 AM and 5 AM</p>
+                        <div class="chart-canvas-wrap">
+                            <canvas id="chart-hourly"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="panel chart-card">
+                        <h3><i class="fa-solid fa-chart-pie"></i> Class Distribution Ratio</h3>
+                        <p class="chart-desc">Legitimate vs. Fraudulent Transactions in Custom Dataset</p>
+                        <div class="chart-canvas-wrap">
+                            <canvas id="chart-class"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="panel chart-card">
+                        <h3><i class="fa-solid fa-shield-halved"></i> Merchant Category Vulnerability</h3>
+                        <p class="chart-desc">Ratio of fraudulent activity per merchant industry</p>
+                        <div class="chart-canvas-wrap">
+                            <canvas id="chart-categories"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="panel chart-card">
+                        <h3><i class="fa-solid fa-table-cells"></i> Confusion Matrix Heatmap</h3>
+                        <p class="chart-desc">True vs Predicted labels on test holdout set</p>
+                        <div class="cm-display" id="cm-display">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. TAB: BATCH CSV SCANNER -->
+        <section id="tab-batch" class="tab-pane">
+            <div class="panel">
+                <div class="panel-header">
+                    <h2><i class="fa-solid fa-file-csv"></i> Batch Transaction Risk Scanner</h2>
+                    <span class="panel-sub">Upload credit card transactions in CSV format for automated bulk inspection</span>
+                </div>
+
+                <div class="batch-upload-zone" id="drop-zone" onclick="triggerFileInput()">
+                    <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                    <h3>Drag & Drop CSV File Here or <span class="browse-link">Browse</span></h3>
+                    <p>Supports standard <code>creditcard.csv</code> format or custom transaction headers</p>
+                    <input type="file" id="batch-file-input" accept=".csv" style="display: none" onchange="handleFileSelect(event)">
+                </div>
+
+                <div class="sample-batch-actions">
+                    <span>Don't have a file ready?</span>
+                    <a href="/download/sample-batch.csv" class="btn btn-secondary btn-sm">
+                        <i class="fa-solid fa-download"></i> Download Sample Test CSV
+                    </a>
+                </div>
+
+                <!-- Batch Results Container -->
+                <div id="batch-results-wrap" class="batch-results-wrap" style="display: none;">
+                    <div class="batch-summary-cards">
+                        <div class="summary-tile">
+                            <div class="num" id="batch-total">0</div>
+                            <div class="lbl">Transactions Evaluated</div>
+                        </div>
+                        <div class="summary-tile alert">
+                            <div class="num" id="batch-frauds">0</div>
+                            <div class="lbl">Frauds Blocked</div>
+                        </div>
+                        <div class="summary-tile success">
+                            <div class="num" id="batch-legit">0</div>
+                            <div class="lbl">Approved Transactions</div>
+                        </div>
+                        <div class="summary-tile money">
+                            <div class="num" id="batch-blocked-money">$0.00</div>
+                            <div class="lbl">Stolen Capital Saved</div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive mt-4">
+                        <table class="data-table" id="batch-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Amount</th>
+                                    <th>Hour</th>
+                                    <th>Category</th>
+                                    <th>Fraud Prob</th>
+                                    <th>Risk Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="batch-table-body">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. TAB: CUSTOM DATASET STUDIO -->
+        <section id="tab-generator" class="tab-pane">
+            <div class="grid-layout">
+                <div class="panel form-panel">
+                    <div class="panel-header">
+                        <h2><i class="fa-solid fa-sliders"></i> Dataset Synthesizer Studio</h2>
+                        <span class="panel-sub">Generate self-contained credit card datasets with mathematically modeled fraud patterns</span>
+                    </div>
+
+                    <form id="gen-form" onsubmit="handleDatasetGenerate(event)">
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-database"></i> Total Number of Transactions</label>
+                            <div class="range-wrap">
+                                <input type="range" id="gen-samples" min="1000" max="15000" step="500" value="5000" oninput="document.getElementById('sample-val').innerText = Number(this.value).toLocaleString()">
+                                <span id="sample-val" class="range-display">5,000</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-percent"></i> Fraud Percentage (%)</label>
+                            <div class="range-wrap">
+                                <input type="range" id="gen-fraud-ratio" min="1.0" max="10.0" step="0.5" value="3.5" oninput="document.getElementById('ratio-val').innerText = this.value + '%'">
+                                <span id="ratio-val" class="range-display">3.5%</span>
+                            </div>
+                        </div>
+
+                        <div class="features-checklist">
+                            <h4>Generated Real-World Indicators:</h4>
+                            <ul>
+                                <li><i class="fa-solid fa-check"></i> <strong>Log-normal amount distribution</strong> with high-ticket outlier signatures</li>
+                                <li><i class="fa-solid fa-check"></i> <strong>Diurnal time velocity patterns</strong> with nocturnal anomaly weighting</li>
+                                <li><i class="fa-solid fa-check"></i> <strong>Merchant risk categories</strong> (Crypto, Luxury, Travel, Online Retail)</li>
+                                <li><i class="fa-solid fa-check"></i> <strong>PCA features (V1-V28)</strong> structured with covariant distribution shifts</li>
+                                <li><i class="fa-solid fa-check"></i> <strong>Device telemetry</strong>, geolocation distances, and failed PIN security metrics</li>
+                            </ul>
+                        </div>
+
+                        <button type="submit" id="btn-generate" class="btn btn-primary btn-block">
+                            <i class="fa-solid fa-gears"></i> GENERATE & RE-SYNTHESIZE DATASET
+                        </button>
+                    </form>
+                </div>
+
+                <div class="panel result-panel">
+                    <div class="panel-header">
+                        <h2><i class="fa-solid fa-download"></i> Download Ready Datasets</h2>
+                        <span class="panel-sub">Direct access to pre-generated, self-contained datasets</span>
+                    </div>
+
+                    <div class="download-cards">
+                        <div class="download-card">
+                            <div class="card-icon"><i class="fa-solid fa-file-csv"></i></div>
+                            <div class="card-info">
+                                <h4>transactions_custom.csv</h4>
+                                <p>Human-interpretable attributes (Customer Name, Category, Distance, Failed PIN, Amount, Class).</p>
+                                <span class="file-tag">5,000 Rows • 13 Columns</span>
+                            </div>
+                            <a href="/download/transactions_custom.csv" class="btn btn-secondary">
+                                <i class="fa-solid fa-download"></i> Download
+                            </a>
+                        </div>
+
+                        <div class="download-card">
+                            <div class="card-icon"><i class="fa-solid fa-file-shield"></i></div>
+                            <div class="card-info">
+                                <h4>creditcard.csv</h4>
+                                <p>100% Kaggle standard format (Time, V1 to V28 PCA features, Amount, Class).</p>
+                                <span class="file-tag">5,000 Rows • 31 Columns</span>
+                            </div>
+                            <a href="/download/creditcard.csv" class="btn btn-secondary">
+                                <i class="fa-solid fa-download"></i> Download
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. TAB: API & DEPLOYMENT GUIDE -->
+        <section id="tab-api" class="tab-pane">
+            <div class="panel">
+                <div class="panel-header">
+                    <h2><i class="fa-solid fa-cloud-arrow-up"></i> Public Deployment & REST API Reference</h2>
+                    <span class="panel-sub">Anyone with your deployed link can access this portal and use the REST API</span>
+                </div>
+
+                <div class="deploy-guide-grid">
+                    <!-- Deploy Card: Render -->
+                    <div class="deploy-card">
+                        <div class="deploy-card-header">
+                            <i class="fa-solid fa-server"></i>
+                            <h3>Deploy Free to Render.com</h3>
+                        </div>
+                        <ol>
+                            <li>Push this repository to your GitHub account.</li>
+                            <li>Go to <a href="https://render.com" target="_blank">Render.com</a> &gt; Click <strong>New +</strong> &gt; <strong>Web Service</strong>.</li>
+                            <li>Select your repository. Render automatically reads <code>Procfile</code> and <code>render.yaml</code>.</li>
+                            <li>Click <strong>Deploy Web Service</strong>. You get a public URL like <code>https://your-app.onrender.com</code>!</li>
+                        </ol>
+                    </div>
+
+                    <!-- Deploy Card: Hugging Face Spaces -->
+                    <div class="deploy-card">
+                        <div class="deploy-card-header">
+                            <i class="fa-solid fa-face-smile"></i>
+                            <h3>Deploy to Hugging Face Spaces</h3>
+                        </div>
+                        <ol>
+                            <li>Create a new Space on <a href="https://huggingface.co/spaces" target="_blank">Hugging Face</a> with SDK: <strong>Docker</strong> or <strong>Blank</strong>.</li>
+                            <li>Push or upload repository files. The included <code>Dockerfile</code> runs <code>app.py</code> on port 7860/5000 automatically.</li>
+                            <li>Your app is live with a permanent, public HTTPS link!</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- REST API Documentation -->
+                <div class="api-docs-section mt-4">
+                    <h3><i class="fa-solid fa-code"></i> Real-time Prediction Endpoint</h3>
+                    <div class="endpoint-badge"><span class="method post">POST</span> <code>/api/predict</code></div>
+                    <p class="mt-2">Send transactional parameters as JSON to receive instant fraud classification and risk score.</p>
+                    
+                    <div class="code-block-wrap">
+                        <div class="code-title">Sample cURL Request</div>
+                        <pre class="code-block"><code>curl -X POST https://YOUR_DEPLOYED_URL/api/predict \
+  -H "Content-Type: application/json" \
+  -d '{
+    "amount": 3400.00,
+    "hour": 3,
+    "merchant_category": "Luxury & Jewelry",
+    "distance": 850.0,
+    "is_foreign": 1,
+    "failed_pin": 2,
+    "device_trust": 25
+  }'</code></pre>
+                    </div>
+
+                    <div class="code-block-wrap mt-3">
+                        <div class="code-title">Sample JSON Response</div>
+                        <pre class="code-block"><code>{
+  "success": true,
+  "prediction": {
+    "is_fraud": 1,
+    "fraud_probability": 0.964,
+    "fraud_percentage": 96.4,
+    "risk_level": "CRITICAL",
+    "risk_color": "#ef4444",
+    "recommended_action": "BLOCK_TRANSACTION",
+    "risk_reasons": [
+      "High transaction amount ($3,400.00) deviates significantly from standard baseline.",
+      "Transaction conducted at 03:00 (unusual nighttime hours).",
+      "High-risk merchant industry category: 'Luxury & Jewelry'.",
+      "Unusual location anomaly: 850 km away from billing address.",
+      "Cross-border / international transaction detected.",
+      "Security Alert: 2 failed PIN attempt(s) recorded prior to transaction."
+    ]
+  }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for Banking Transfer Interception -->
+    <div id="security-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-icon" id="modal-icon">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <h3 id="modal-title">Security Alert</h3>
+            <p id="modal-msg">Transaction status message</p>
+            <div class="modal-details" id="modal-details">
+                <!-- Injected via JS -->
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <p>AegisGuard AI Fraud Detection System • Self-Contained Custom Dataset & Machine Learning Pipeline • Cloud Deployed</p>
+    </footer>
+
+    <!-- App Logic Script -->
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

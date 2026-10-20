@@ -1,8 +1,7 @@
-# Requirements for Credit Card Fraud Detection
-pandas
-numpy
-matplotlib
-seaborn
-scikit-learn
-imbalanced-learn
-joblib
+Flask>=3.0.0
+flask-cors>=4.0.0
+scikit-learn>=1.3.0
+pandas>=2.0.0
+numpy>=1.24.0
+joblib>=1.3.0
+gunicorn>=21.2.0; platform_system != "Windows"

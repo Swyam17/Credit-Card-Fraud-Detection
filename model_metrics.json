@@ -1,0 +1,65 @@
+{
+  "accuracy": 1.0,
+  "precision": 1.0,
+  "recall": 1.0,
+  "f1_score": 1.0,
+  "roc_auc": 1.0,
+  "confusion_matrix": [
+    [
+      965,
+      0
+    ],
+    [
+      0,
+      35
+    ]
+  ],
+  "total_test_samples": 1000,
+  "test_fraud_count": 35,
+  "top_features": [
+    {
+      "feature": "V14",
+      "importance": 0.2092
+    },
+    {
+      "feature": "V17",
+      "importance": 0.1362
+    },
+    {
+      "feature": "V12",
+      "importance": 0.1324
+    },
+    {
+      "feature": "V10",
+      "importance": 0.1251
+    },
+    {
+      "feature": "Scaled_Amount",
+      "importance": 0.1008
+    },
+    {
+      "feature": "V4",
+      "importance": 0.0848
+    },
+    {
+      "feature": "V11",
+      "importance": 0.0615
+    },
+    {
+      "feature": "V3",
+      "importance": 0.0575
+    },
+    {
+      "feature": "V1",
+      "importance": 0.0327
+    },
+    {
+      "feature": "V16",
+      "importance": 0.0251
+    }
+  ],
+  "dataset_total": 5000,
+  "dataset_fraud": 175,
+  "dataset_normal": 4825,
+  "fraud_percentage": 3.5
+}

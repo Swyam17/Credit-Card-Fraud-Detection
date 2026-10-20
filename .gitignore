@@ -1,2 +1,13 @@
-creditcard.csv 
-*.joblib 
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+.vscode/
+.idea/
+.env
+venv/
+env/
+
+creditcard.csv
+transactions_custom.csv
+*.joblib
